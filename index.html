@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css">
+    <style>
+        .user-message {
+            background-color: #c2e2ff;
+        }
+        .response-message {
+            background-color: #d9f7be;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <input type="text" id="messageInput" class="form-control" placeholder="Type a message">
+                </div>
+            </div>
+            <div class="col-2">
+                <button class="btn btn-primary" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12">
+                <div id="chatArea" style="min-height: 200px; border: 1px solid #ccc; padding: 10px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const url = "http://localhost:3000/ask"
+               fetch(url)
+            .then(response => response.json())
+            .then(data => {
+            console.log(data)
+            })
+            .catch(error => {
+            console.log(error)
+            });
+
+            fetch(url).them(response => console.log(response))
+            var messageInput = document.getElementById('messageInput');
+            var message = messageInput.value;
+            if (message) {
+                var chatArea = document.getElementById('chatArea');
+                var userMessage = document.createElement('div');
+                userMessage.className = 'user-message';
+                userMessage.innerText = 'You: ' + message;
+                chatArea.appendChild(userMessage);
+
+                // Simulate an API call
+                setTimeout(function() {
+                    var responseMessage = document.createElement('div');
+                    responseMessage.className = 'response-message';
+                    responseMessage.innerText = 'Server: This is a response to your message.';
+                    chatArea.appendChild(responseMessage);
+                }, 1000);
+
+                messageInput.value = '';
+            }
+        }
+    </script>
+
+</body>
+</html>
